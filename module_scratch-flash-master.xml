@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_scratch-flash-master" default="compile.module.scratch-flash-master">
+  <dirname property="module.scratch-flash-master.basedir" file="${ant.file.module_scratch-flash-master}"/>
+  
+  <property name="module.jdk.home.scratch-flash-master" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.scratch-flash-master" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.scratch-flash-master" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.scratch-flash-master" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="scratch-flash-master.output.dir" value="${module.scratch-flash-master.basedir}/out/production/scratch-flash-master"/>
+  <property name="scratch-flash-master.testoutput.dir" value="${module.scratch-flash-master.basedir}/out/test/scratch-flash-master"/>
+  
+  <path id="scratch-flash-master.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="scratch-flash-master.module.production.classpath"/>
+  
+  <path id="scratch-flash-master.runtime.production.module.classpath">
+    <pathelement location="${scratch-flash-master.output.dir}"/>
+  </path>
+  
+  <path id="scratch-flash-master.module.classpath">
+    <pathelement location="${scratch-flash-master.output.dir}"/>
+  </path>
+  
+  <path id="scratch-flash-master.runtime.module.classpath">
+    <pathelement location="${scratch-flash-master.testoutput.dir}"/>
+    <pathelement location="${scratch-flash-master.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.scratch-flash-master">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.scratch-flash-master">
+    <patternset refid="excluded.from.module.scratch-flash-master"/>
+  </patternset>
+  
+  
+  <target name="compile.module.scratch-flash-master" depends="compile.module.scratch-flash-master.production,compile.module.scratch-flash-master.tests" description="Compile module scratch-flash-master"/>
+  
+  <target name="compile.module.scratch-flash-master.production" depends="register.custom.compilers" description="Compile module scratch-flash-master; production classes"/>
+  
+  <target name="compile.module.scratch-flash-master.tests" depends="register.custom.compilers,compile.module.scratch-flash-master.production" description="compile module scratch-flash-master; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.scratch-flash-master" description="cleanup module">
+    <delete dir="${scratch-flash-master.output.dir}"/>
+    <delete dir="${scratch-flash-master.testoutput.dir}"/>
+  </target>
+</project>

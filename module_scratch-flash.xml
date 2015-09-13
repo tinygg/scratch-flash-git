@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_scratch-flash" default="compile.module.scratch-flash">
+  <dirname property="module.scratch-flash.basedir" file="${ant.file.module_scratch-flash}"/>
+  
+  <property name="module.jdk.home.scratch-flash" value="${jdk.home.flex4.14}"/>
+  <property name="module.jdk.bin.scratch-flash" value="${jdk.bin.flex4.14}"/>
+  <property name="module.jdk.classpath.scratch-flash" value="jdk.classpath.flex4.14"/>
+  
+  <property name="compiler.args.scratch-flash" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="scratch-flash.output.dir" value="${module.scratch-flash.basedir}/build"/>
+  <property name="scratch-flash.testoutput.dir" value="${module.scratch-flash.basedir}/build"/>
+  
+  <path id="scratch-flash.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="scratch-flash.module.production.classpath">
+    <path refid="${module.jdk.classpath.scratch-flash}"/>
+    <path refid="library.blooddy_crypto.classpath"/>
+    <path refid="library.as3corelib.classpath"/>
+  </path>
+  
+  <path id="scratch-flash.runtime.production.module.classpath">
+    <pathelement location="${scratch-flash.output.dir}"/>
+    <path refid="library.blooddy_crypto.classpath"/>
+    <path refid="library.as3corelib.classpath"/>
+  </path>
+  
+  <path id="scratch-flash.module.classpath">
+    <path refid="${module.jdk.classpath.scratch-flash}"/>
+    <pathelement location="${scratch-flash.output.dir}"/>
+    <path refid="library.blooddy_crypto.classpath"/>
+    <path refid="library.as3corelib.classpath"/>
+  </path>
+  
+  <path id="scratch-flash.runtime.module.classpath">
+    <pathelement location="${scratch-flash.output.dir}"/>
+    <path refid="library.blooddy_crypto.classpath"/>
+    <path refid="library.as3corelib.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.scratch-flash">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.scratch-flash">
+    <patternset refid="excluded.from.module.scratch-flash"/>
+  </patternset>
+  
+  <path id="scratch-flash.module.sourcepath">
+    <dirset dir="${module.scratch-flash.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.scratch-flash" depends="compile.module.scratch-flash.production,compile.module.scratch-flash.tests" description="Compile module scratch-flash"/>
+  
+  <target name="compile.module.scratch-flash.production" depends="register.custom.compilers" description="Compile module scratch-flash; production classes">
+    <mkdir dir="${scratch-flash.output.dir}"/>
+    <javac2 destdir="${scratch-flash.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.scratch-flash}/javac">
+      <compilerarg line="${compiler.args.scratch-flash}"/>
+      <bootclasspath refid="scratch-flash.module.bootclasspath"/>
+      <classpath refid="scratch-flash.module.production.classpath"/>
+      <src refid="scratch-flash.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.scratch-flash"/>
+    </javac2>
+    
+    <copy todir="${scratch-flash.output.dir}">
+      <fileset dir="${module.scratch-flash.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.scratch-flash.tests" depends="register.custom.compilers,compile.module.scratch-flash.production" description="compile module scratch-flash; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.scratch-flash" description="cleanup module">
+    <delete dir="${scratch-flash.output.dir}"/>
+    <delete dir="${scratch-flash.testoutput.dir}"/>
+  </target>
+</project>
