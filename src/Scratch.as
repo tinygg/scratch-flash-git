@@ -997,6 +997,10 @@ public class Scratch extends Sprite {
 	//translation改变的通知
 	public function translationChanged():void {
 		// The translation has changed. Fix scripts and update the UI.
+		// 修改脚本,更新UI,此方法应该是我关注的重点【脚本生成 & UI生效 ==> 图形化组合 -> 脚本生成】.、
+
+		/////////////////////////////////////////////////
+		//stage舞台,就是左上角的RealTime动画区【重点关注】
 		// directionChanged is true if the writing direction (e.g. left-to-right) has changed.
 		for each (var o:ScratchObj in stagePane.allObjects()) {
 			o.updateScriptsAfterTranslation();
@@ -1006,6 +1010,10 @@ public class Scratch extends Sprite {
 			var lw:ListWatcher = uiLayer.getChildAt(i) as ListWatcher;
 			if (lw) lw.updateTranslation();
 		}
+
+		//////////////////////////////////////////////
+
+		//面板改变
 		topBarPart.updateTranslation();
 		stagePart.updateTranslation();
 		libraryPart.updateTranslation();
